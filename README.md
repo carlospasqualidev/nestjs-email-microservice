@@ -1,75 +1,43 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+### Projeto de Microserviço de Envio de E-mails
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+#### Visão Geral
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este projeto é um MVP de um microserviço de envio de e-mails desenvolvido com o framework NestJS. O NestJS é um framework opinado que define um padrão semelhante ao C#, incluindo injeção de dependência e outras funcionalidades.
 
-## Description
+#### Funcionalidade
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+O microserviço funciona da seguinte maneira:
 
-## Installation
+1. **Criação de Conta e Autenticação**: O usuário cria uma conta e realiza a autenticação utilizando um sistema de tokens (access token).
+2. **Registro de Acesso**: O usuário registra seu acesso ao NodeMailer (biblioteca de envio de e-mails para JavaScript), fornecendo o endereço de e-mail e a senha, que são criptografados e armazenados no banco de dados.
+3. **Geração de Token**: O microserviço retorna um token de longa duração que serve como identificador das informações cadastradas.
+4. **Envio de E-mails**: Com o token, o usuário pode fazer uma requisição especificando o token de identificação e os e-mails a serem enviados. O microserviço descriptografa as informações internamente, envia os e-mails e retorna o número de e-mails enviados com sucesso e os que falharam.
 
-```bash
-$ npm install
-```
+#### Swagger
 
-## Running the app
+![Logo do Projeto](./images/swagger-image.png)
 
-```bash
-# development
-$ npm run start
+#### Swagger - Body de Envio de E-mails
 
-# watch mode
-$ npm run start:dev
+![Logo do Projeto](./images/swagger-transporter-email-body.png)
 
-# production mode
-$ npm run start:prod
-```
+#### Configuração e Execução
 
-## Test
+Para rodar o projeto:
 
-```bash
-# unit tests
-$ npm run test
+1. Certifique-se de ter o npm instalado.
+2. Abra o terminal na raiz do projeto e execute `npm install` para instalar todos os pacotes necessários.
+3. Tenha o Docker rodando na sua máquina para iniciar o banco de dados. Execute o comando `npx prisma migrate dev` para migrar o banco de dados utilizando o Prisma.
+4. Acesse `http://localhost:8080/docs` para acessar a documentação Swagger e realizar os testes necessários.
 
-# e2e tests
-$ npm run test:e2e
+#### Estrutura do Projeto
 
-# test coverage
-$ npm run test:cov
-```
+A estrutura do projeto é inspirada no conceito de arquitetura limpa e inclui:
 
-## Support
+- **DTOs, Controllers, Models**: Particularidades do framework NestJS.
+- **Use Cases, Repositories, Entidades**: Para a lógica de negócio.
+- **Utilitários**: Funções padrão como classes de JWT, guards para permissões, pipes para tratamento de dados, filtros de exceção, classes para manipulação de datas em JavaScript, entre outros.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Gerenciamento do Banco de Dados
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-
-## Compilador SWC - 20x mais rapido
+Toda a estrutura do banco de dados é gerenciada pelo arquivo `schema.prisma` localizado na pasta `prisma`, onde são feitos mapeamentos de entidades e relacionamentos.
